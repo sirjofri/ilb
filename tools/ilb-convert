@@ -1,6 +1,23 @@
 #!/usr/bin/env perl
 # vim:syntax=perl:
 
+=head1 NAME
+
+ilb-convert - InterLinear Bible converter
+
+=head1 SYNOPSIS
+
+B<< ilb-convert < >>input.csv B<< > >>book.json
+
+B<< ilb-convert -d=';' < >>input.csv B<< > >>book.json
+
+=head1 DESCRIPTION
+
+For more information visit L<https://github.com/sirjofri/ilb> and read
+the Readme.
+
+=cut
+
 my $template_head = qq({
 	"short_name": "__short_name__",
 	"name": "__name__",
