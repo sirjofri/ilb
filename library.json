@@ -1,0 +1,25 @@
+{
+	"library": "official",
+	"path": "/library.json",
+	"version": "0.1",
+	"list": [
+		{
+			"book": "genesis",
+			"path": "/library/genesis.json",
+			"languages": [
+				"onelang",
+				"twolang",
+				"threelang"
+			]
+		},
+		{
+			"book": "exodus",
+			"path": "/library/exodus.json",
+			"languages": [
+				"onelang",
+				"twolang",
+				"threelang"
+			]
+		}
+	]
+}

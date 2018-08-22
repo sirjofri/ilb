@@ -1,0 +1,36 @@
+{
+	"short_name": "exodus",
+	"name": "exodus first book of moses",
+	"languages": [
+		"onelang",
+		"twolang",
+		"threelang"
+	],
+	"content": [
+		"1.",   "",    "",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"2.",   "",    "",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three",
+		"one", "two", "three"
+	]
+}

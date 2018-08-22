@@ -1,0 +1,10 @@
+<h2>Book Select</h2>
+
+<div>
+<input type="text" id="select_search">
+<input type="button" value="Search" onclick="select_search_button();">
+</div>
+
+<ul id="select_list">
+
+</ul>

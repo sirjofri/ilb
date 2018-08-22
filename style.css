@@ -1,0 +1,59 @@
+body,
+header,
+main,
+footer {
+	width: 100%;
+}
+
+body {
+	margin: 0px;
+}
+
+header,
+footer {
+	background-color: white;
+	border: solid black;
+}
+
+header {
+	position: fixed;
+	height: 40px;
+	top: 0px;
+	border-width: 0px 0px 1px 0px;
+	padding: 0px 5px;
+}
+
+header h1 {
+	font-size: 14pt;
+}
+
+footer {
+	position: fixed;
+	height: 80px;
+	bottom: -40px;
+	border-width: 1px 0px 0px 0px;
+}
+
+main {
+	margin: 45px 0px 80px 0px;
+}
+
+main > div,
+main > h2 {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#page_container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#page_container .col {
+	text-align: center;
+	margin: 8px 5px;
+}
+
+#page_container .col > span {
+	display: block;
+}

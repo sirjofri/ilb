@@ -1,0 +1,10 @@
+{
+	"short_name": "ILB",
+	"name": "InterLinear Bible",
+	"description": "An Interlinear Bible App",
+	"start_url": "./index.html",
+	"display": "standalone",
+	"orientation": "portrait",
+	"theme_color": "#cc2200",
+	"background_color": "#cc2200"
+}
