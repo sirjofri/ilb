@@ -6,11 +6,13 @@ self.addEventListener("install", (e) => {
 			"./index.html",
 			"./style.css",
 			"./main.js",
+			"./worker.js",
 			"./page/start.htt",
 			"./page/info.htt",
 			"./page/settings.htt",
 			"./page/page.htt",
-			"./page/select.htt"
+			"./page/select.htt",
+			"./library.json"
 		]).then(() => {
 			self.skipWaiting();
 		});

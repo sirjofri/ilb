@@ -1,0 +1,53 @@
+#!/usr/bin/env perl
+# vim:syntax=perl:
+
+my $template_head = qq({
+	"short_name": "__short_name__",
+	"name": "__name__",
+	"languages": [
+		);
+
+my $template_mid = qq(
+	],
+	"content": [
+		);
+
+my $template_foot = qq(
+	]
+});
+
+my $delimiter = ',';
+my @languages;
+my $num;
+my @contents;
+
+foreach my $arg (@ARGV) {
+	my $delimstr = $arg if $arg =~ /-d=.*/ or next;
+	$delimstr =~ /-d=(?<delim>.*)/;
+	$delimiter = $+{delim};
+}
+
+while(<>) {
+	chomp;
+	my @fields = split /$delimiter/, $_;
+	$num = $#fields;
+	my @encapsulated;
+	foreach my $f (@fields) {
+		push @encapsulated, qq("$f");
+	}
+	my $str = join ", ", @encapsulated;
+	push @contents, $str;
+}
+
+foreach $i (0..$num) {
+	my $id = $i+1;
+	$languages[$i] = qq("language$id");
+}
+
+print $template_head;
+my $lstr = join ",\n\t\t", @languages;
+print $lstr;
+print $template_mid;
+my $cstr = join ",\n\t\t", @contents;
+print $cstr;
+print $template_foot;
