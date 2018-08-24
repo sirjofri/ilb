@@ -1,6 +1,7 @@
 {
 	"short_name": "exodus",
 	"name": "exodus first book of moses",
+	"direction": "left",
 	"languages": [
 		"onelang",
 		"twolang",

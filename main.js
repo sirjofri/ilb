@@ -93,6 +93,7 @@ function openBook(title, path) {
 			strbuf = "";
 			obj.content.forEach((i, n) => { build_part_str(i, n, num); });
 			getId("page_container").innerHTML = strbuf;
+			getId("page_container").style.flexDirection = (obj.direction == "left" ? "row" : "row-reverse");
 		});
 	});
 }

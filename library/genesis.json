@@ -1,6 +1,7 @@
 {
 	"short_name": "genesis",
 	"name": "genesis first book of moses",
+	"direction": "right",
 	"languages": [
 		"onelang",
 		"twolang",

@@ -21,6 +21,7 @@ the Readme.
 my $template_head = qq({
 	"short_name": "__short_name__",
 	"name": "__name__",
+	"direction": "left or right",
 	"languages": [
 		);
 
