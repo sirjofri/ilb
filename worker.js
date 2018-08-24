@@ -1,7 +1,7 @@
-var cacheName = "0.1";
+var version = "0.1";
 
 self.addEventListener("install", (e) => {
-	e.waitUntil(caches.open(cacheName).then((cache) => {
+	e.waitUntil(caches.open(version).then((cache) => {
 		return cache.addAll([
 			"/",
 			"/index.html",
@@ -19,6 +19,20 @@ self.addEventListener("install", (e) => {
 
 self.addEventListener("activate", (e) => {
 	e.waitUntil(self.skipWaiting());
+	e.waitUntil(
+		caches.keys().then((cnames) => {
+			return Promise.all(
+				cnames.map((cname) => {
+					if (cname !== version && cname !== "library") {
+						console.log("SW: deleting old cache:", cname);
+						return caches.delete(cname);
+					}
+				})
+			);
+		}).then(() => {
+			return self.clients.claim();
+		})
+	);
 });
 
 self.addEventListener("fetch", (e) => {
@@ -35,7 +49,7 @@ self.addEventListener("fetch", (e) => {
 self.addEventListener("message", (e) => {
 	console.log({ note: "received", msg: e.data });
 	if (e.data.command == "store") {
-		e.waitUntil(caches.open(cacheName).then((cache) => {
+		e.waitUntil(caches.open("library").then((cache) => {
 			return cache.add(e.data.path);
 		}));
 		return;
