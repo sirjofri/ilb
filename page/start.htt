@@ -1,4 +1,7 @@
+<article>
+<header>
 <h2>Start</h2>
+</header>
 
 <ul>
 <li><a href="#" onclick="page.setPage('select');">Select Book</a></li>
@@ -6,3 +9,5 @@
 <li><a href="#" onclick="page.setPage('info');">Info</a></li>
 <li><a href="#" onclick="page.setPage('page');">Page</a></li>
 </ul>
+
+</article>

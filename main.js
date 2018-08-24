@@ -34,17 +34,22 @@ page.setPage = function(p, handler) {
 		console.log("Page loaded");
 	});
 };
+
 if ('serviceWorker' in navigator) {
 	navigator.serviceWorker.register("./worker.js").then((reg) => { console.log("register success", reg); }).catch((err) => { console.warn("no register success", err); });
 }
 
-window.addEventListener("online", (e) => {
-	console.log("you are online");
-}, false);
+function offline(e) {
+	getId("online").innerHTML = "offline";
+}
 
-window.addEventListener("offline", (e) => {
-	console.log("you are offline");
-}, false);
+function online(e) {
+	getId("online").innerHTML = "online";
+}
+
+window.addEventListener("online", online, false);
+
+window.addEventListener("offline", offline, false);
 
 window.addEventListener("load", () => {
 	window.history.pushState({ noBackExitsApp: true, page: "start" }, '');
@@ -62,9 +67,9 @@ window.onload = function() {
 
 function updatePage() {
 	if (navigator.onLine) {
-		//online
+		online();
 	} else {
-		//offline
+		offline();
 	}
 }
 
@@ -88,6 +93,14 @@ function openBook(title, path) {
 		console.log("Loaded content");
 		page.setPage("page", function() {
 			getId("page_title").innerHTML = title;
+			getId("page_storelink").addEventListener("click", () => {
+				if (!navigator.serviceWorker.controller)
+					return;
+				navigator.serviceWorker.controller.postMessage({
+					command: "store",
+					path: path
+				});
+			});
 			var obj = JSON.parse(r);
 			var num = obj.languages.length;
 			strbuf = "";
@@ -108,5 +121,4 @@ function build_part_str(item, index, mod) {
 	} else {
 		strbuf += "<span class=\"t"+(index%mod)+"\">"+item+"</span>";
 	}
-	console.log("string: "+strbuf);
 }

@@ -13,14 +13,15 @@ self.addEventListener("install", (e) => {
 			"/page/page.htt",
 			"/page/select.htt",
 			"/library.json"
-		]).then(() => {
-			self.skipWaiting();
-		});
-	}));
+		]);
+	}).then(() => { return self.skipWaiting(); }));
+});
+
+self.addEventListener("activate", (e) => {
+	e.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener("fetch", (e) => {
-	console.log("Request: " + e.request.url);
 	e.respondWith(
 		caches.match(e.request).then((response) => {
 			if (response) {
@@ -29,4 +30,14 @@ self.addEventListener("fetch", (e) => {
 			return fetch(e.request);
 		})
 	);
+});
+
+self.addEventListener("message", (e) => {
+	console.log({ note: "received", msg: e.data });
+	if (e.data.command == "store") {
+		e.waitUntil(caches.open(cacheName).then((cache) => {
+			return cache.add(e.data.path);
+		}));
+		return;
+	}
 });

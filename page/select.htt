@@ -1,4 +1,7 @@
+<article>
+<header>
 <h2>Book Select</h2>
+</header>
 
 <div>
 <input type="text" id="select_search">
@@ -8,3 +11,4 @@
 <ul id="select_list">
 
 </ul>
+</article>

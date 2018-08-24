@@ -1,4 +1,9 @@
-<h2 id="page_title">Page</h2>
+<article>
+<header class="oneline">
+	<h2 id="page_title">Page</h2>
+	<a href="#" id="page_storelink">Store</a>
+</header>
 
 <div id="page_container">
 </div>
+</article>
