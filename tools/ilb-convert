@@ -18,6 +18,8 @@ the Readme.
 
 =cut
 
+use Text::CSV;
+
 my $template_head = qq({
 	"short_name": "__short_name__",
 	"name": "__name__",
@@ -45,9 +47,15 @@ foreach my $arg (@ARGV) {
 	$delimiter = $+{delim};
 }
 
+my $csv = Text::CSV->new({
+	binary => 1,
+	sep_char => $delimiter,
+});
+
 while(<>) {
 	chomp;
-	my @fields = split /$delimiter/, $_;
+	$csv->parse($_) or die "No valid input: $_";
+	my @fields = $csv->fields();
 	$num = $#fields;
 	my @encapsulated;
 	foreach my $f (@fields) {
