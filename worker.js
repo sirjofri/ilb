@@ -3,16 +3,16 @@ var cacheName = "0.1";
 self.addEventListener("install", (e) => {
 	e.waitUntil(caches.open(cacheName).then((cache) => {
 		return cache.addAll([
-			"./index.html",
-			"./style.css",
-			"./main.js",
-			"./worker.js",
-			"./page/start.htt",
-			"./page/info.htt",
-			"./page/settings.htt",
-			"./page/page.htt",
-			"./page/select.htt",
-			"./library.json"
+			"/",
+			"/index.html",
+			"/style.css",
+			"/main.js",
+			"/page/start.htt",
+			"/page/info.htt",
+			"/page/settings.htt",
+			"/page/page.htt",
+			"/page/select.htt",
+			"/library.json"
 		]).then(() => {
 			self.skipWaiting();
 		});
@@ -20,6 +20,7 @@ self.addEventListener("install", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
+	console.log("Request: " + e.request.url);
 	e.respondWith(
 		caches.match(e.request).then((response) => {
 			if (response) {
