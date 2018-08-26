@@ -78,7 +78,7 @@ function select_search_button() {
 		var obj = JSON.parse(r);
 		getId("select_list").innerHTML = "";
 		obj.list.forEach((el) => {
-			var book = el.book;
+			var book = el.name;
 			var path = el.path;
 			var lang = el.languages;
 

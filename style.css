@@ -12,14 +12,13 @@ body {
 body > header,
 body > footer {
 	background-color: white;
-	border: solid black;
+	box-shadow: 0px 0px 5px black;
+	position: fixed;
 }
 
 body > header {
-	position: fixed;
 	height: 40px;
 	top: 0px;
-	border-width: 0px 0px 1px 0px;
 	padding: 0px 5px;
 }
 
@@ -28,10 +27,16 @@ body > header h1 {
 }
 
 body > footer {
-	position: fixed;
-	height: 80px;
-	bottom: -40px;
-	border-width: 1px 0px 0px 0px;
+	height: 68px;
+	bottom: 0px;
+	display: flex;
+	justify-content: space-between;
+}
+
+body > footer > div {
+	height: 64px;
+	width: 64px;
+	margin: 2px;
 }
 
 main {

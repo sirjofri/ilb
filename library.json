@@ -4,7 +4,7 @@
 	"version": "0.1",
 	"list": [
 		{
-			"book": "genesis",
+			"name": "genesis",
 			"path": "/library/genesis.json",
 			"version": "0.1",
 			"languages": [
@@ -14,7 +14,7 @@
 			]
 		},
 		{
-			"book": "exodus",
+			"name": "exodus",
 			"path": "/library/exodus.json",
 			"version": "0.1",
 			"languages": [

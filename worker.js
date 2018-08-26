@@ -47,11 +47,17 @@ self.addEventListener("fetch", (e) => {
 });
 
 self.addEventListener("message", (e) => {
-	console.log({ note: "received", msg: e.data });
+	console.log("[SW]: message", e.data);
+	if (!e.data.command) return;
 	if (e.data.command == "store") {
 		e.waitUntil(caches.open("library").then((cache) => {
+			console.log("[SW]: stored library");
 			return cache.add(e.data.path);
 		}));
 		return;
+	}
+	if (e.data.command == "update") {
+		console.log("[SW]: update not implemented yet!");
+		//TODO: implement. Use Number() for explicit string conversion.
 	}
 });
