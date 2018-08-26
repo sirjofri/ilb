@@ -1,6 +1,7 @@
 {
 	"short_name": "genesis",
 	"name": "genesis first book of moses",
+	"select": "genesis/1",
 	"direction": "right",
 	"version": "0.1",
 	"license": "CC0",

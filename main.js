@@ -29,10 +29,22 @@ page.setPage = function(p, handler) {
 		page.currentPage = p;
 		getTag("main")[0].innerHTML = r;
 		window.history.pushState({ noBackExitsApp: true, page: p }, '');
+		page.load(p);
 		if (handler)
 			handler();
 		console.log("Page loaded");
 	});
+};
+
+page.load = function(p) {
+	switch (p) {
+	case "select":
+		getId("book").style.display = "block";
+		getId("chapter").style.display = "none";
+		getId("select_list").style.display = "none";
+		break;
+	default:
+	}
 };
 
 if ('serviceWorker' in navigator) {
@@ -73,17 +85,67 @@ function updatePage() {
 	}
 }
 
-function select_search_button() {
+var selected = {};
+
+function select_book(book) {
+	selected.book = book;
+	getId("book").style.display = "none";
+	getId("chapter").style.display = "block";
+}
+
+function select_chapter(chapter) {
+	selected.chapter = chapter;
+	getId("chapter").style.display = "none";
+	getId("select_list").style.display = "block";
+	select_open();
+}
+
+function select_open() {
+	if (!selected.book || !selected.chapter) {
+		selected = {};
+		getId("select_list").style.display = "none";
+		getId("book").style.display = "block";
+		return;
+	}
+
+	var selectstring = selected.book+"/"+selected.chapter;
+	console.log("selectstring", selectstring);
 	xhr("./library.json", (r) => {
 		var obj = JSON.parse(r);
 		getId("select_list").innerHTML = "";
+		console.log("selectstring", selectstring);
 		obj.list.forEach((el) => {
-			var book = el.name;
+			console.log("select:", el);
+			if (el.select != selectstring)
+				return;
+
+			var book = el.short_name;
 			var path = el.path;
 			var lang = el.languages;
 
 			getId("select_list").innerHTML +=
-				"<li><a href=\"#\" onclick=\"openBook('"+book+"','"+path+"');\">"+book+"</a> in "+el.languages+"</li>";
+				"<li><a href=\"#\" onclick=\"openBook('"+book+"', '"+path+"');\">"+book+"</a> in "+el.languages+"</li>";
+		});
+	});
+}
+
+function select_search_button() {
+	xhr("./library.json", (r) => {
+		var obj = JSON.parse(r);
+		var searchstr = getId("select_search").value.toLowerCase();
+		getId("select_list").innerHTML = "";
+		getId("select_list").style.display = "block";
+		getId("book").style.display = "none";
+		getId("chapter").style.display = "none";
+		obj.list.forEach((el) => {
+			var book = el.short_name;
+			var name = el.name;
+			var path = el.path;
+			var lang = el.languages;
+
+			if (book.toLowerCase().match(searchstr) || name.toLowerCase().match(searchstr))
+				getId("select_list").innerHTML +=
+					"<li><a href=\"#\" onclick=\"openBook('"+book+"','"+path+"');\">"+book+"</a> in "+el.languages+"</li>";
 		});
 	});
 }

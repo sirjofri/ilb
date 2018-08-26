@@ -1,6 +1,7 @@
 {
 	"short_name": "exodus",
-	"name": "exodus first book of moses",
+	"name": "exodus second book of moses",
+	"select": "exodus/1",
 	"direction": "left",
 	"version": "0.1",
 	"license": "CC0",

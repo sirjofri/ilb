@@ -4,7 +4,9 @@
 	"version": "0.1",
 	"list": [
 		{
-			"name": "genesis",
+			"short_name": "genesis",
+			"name": "genesis first book of moses",
+			"select": "genesis/1",
 			"path": "/library/genesis.json",
 			"version": "0.1",
 			"languages": [
@@ -14,7 +16,9 @@
 			]
 		},
 		{
-			"name": "exodus",
+			"short_name": "exodus",
+			"name": "exodus second book of moses",
+			"select": "exodus/1",
 			"path": "/library/exodus.json",
 			"version": "0.1",
 			"languages": [

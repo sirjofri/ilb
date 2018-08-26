@@ -23,6 +23,7 @@ use Text::CSV;
 my $template_head = qq({
 	"short_name": "__short_name__",
 	"name": "__name__",
+	"select": "book/chapter",
 	"direction": "left or right",
 	"version": "1.0",
 	"license": "All rights reserved.",

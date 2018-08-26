@@ -8,6 +8,17 @@
 <input type="button" value="Search" onclick="select_search_button();">
 </div>
 
+<div id="book">
+<a href="#" onclick="select_book('genesis');">Genesis</a>
+<a href="#" onclick="select_book('exodus');">Exodus</a>
+<a href="#" onclick="select_book('john');">John</a>
+</div>
+
+<div id="chapter">
+<a href="#" onclick="select_chapter('1');">1</a>
+<a href="#" onclick="select_chapter('2');">2</a>
+</div>
+
 <ul id="select_list">
 
 </ul>
