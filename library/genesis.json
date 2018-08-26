@@ -2,6 +2,10 @@
 	"short_name": "genesis",
 	"name": "genesis first book of moses",
 	"direction": "right",
+	"version": "0.1",
+	"license": "CC0",
+	"license_text": "CC0",
+	"license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
 	"languages": [
 		"onelang",
 		"twolang",

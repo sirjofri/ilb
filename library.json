@@ -6,6 +6,7 @@
 		{
 			"book": "genesis",
 			"path": "/library/genesis.json",
+			"version": "0.1",
 			"languages": [
 				"onelang",
 				"twolang",
@@ -15,6 +16,7 @@
 		{
 			"book": "exodus",
 			"path": "/library/exodus.json",
+			"version": "0.1",
 			"languages": [
 				"onelang",
 				"twolang",
