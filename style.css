@@ -48,6 +48,18 @@ article {
 	margin-right: 5px;
 }
 
+.icon {
+	box-shadow: 0px 0px 3px black;
+	border-radius: 3px;
+}
+
+.icon a {
+	display: block;
+	height: 100%;
+	width: 100%;
+	color: transparent;
+}
+
 #page_container {
 	display: flex;
 	flex-wrap: wrap;

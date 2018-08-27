@@ -12,7 +12,9 @@ self.addEventListener("install", (e) => {
 			"/page/settings.htt",
 			"/page/page.htt",
 			"/page/select.htt",
-			"/library.json"
+			"/library.json",
+			"/img/icon.css",
+			"/img/icon.svg"
 		]);
 	}).then(() => { return self.skipWaiting(); }));
 });
