@@ -59,7 +59,29 @@ self.addEventListener("message", (e) => {
 		return;
 	}
 	if (e.data.command == "update") {
-		console.log("[SW]: update not implemented yet!");
-		//TODO: implement. Use Number() for explicit string conversion.
+		console.log("[SW] update function is nearly untested!");
+		e.waitUntil(fetch("/library.json").then((response) => {
+			return response.json();
+		}).then((data) => {
+			data.list.forEach((el) => {
+				caches.match("/library.json").then((response) => {
+					return response.json();
+				}).then((cached) => {
+					cached.list.forEach((cel) => {
+						if (cel.short_name !== el.short_name)
+							return;
+						if (Number(cel.version) >= Number(el.version)) // TODO: what about versions like: "1.0.2"?
+							return;
+						console.log("[SW] update", cel, el);
+						caches.open("library").then((cache) => {
+							cache.add(cel.path);
+						});
+					});
+				});
+			});
+			caches.open(version).then((cache) => {
+				cache.add("/library.json");
+			});
+		}));
 	}
 });

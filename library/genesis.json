@@ -3,7 +3,7 @@
 	"name": "genesis first book of moses",
 	"select": "genesis/1",
 	"direction": "right",
-	"version": "0.1",
+	"version": "0.2",
 	"license": "CC0",
 	"license_text": "CC0",
 	"license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
