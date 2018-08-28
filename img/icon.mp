@@ -93,7 +93,26 @@ beginfig(1)
 			..{(0,1)}o+(width/2+10, height/2);
 	endgroup;
 
+%icon:update:
 	o := (4*width, 0);
+	begingroup
+		offset := 10;
+		len := 5;
+		arroff := 2.5;
+		draw  o+(width/2, height-offset){(-1,0)}
+			..{(0,-1)}o+(offset, height/2){(0,-1)}
+			..{(1,0)}o+(width/2, offset){(1,0)}
+			..{(0,1)}o+(width-offset, height/2){(0,1)}
+			..{(-1,0)}cycle;
+		draw  o+(width/2+len-arroff, height-offset+len)
+			--o+(width/2-arroff, height-offset)
+			--o+(width/2+len-arroff, height-offset-len);
+		draw  o+(width/2-len+arroff, offset+len)
+			--o+(width/2+arroff, offset)
+			--o+(width/2-len+arroff, offset-len);
+	endgroup;
+
+	o := (5*width, 0);
 	pickup pencircle scaled 0pt;
 	draw (0,0)--o+(0,height); % image size
 
