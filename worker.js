@@ -12,6 +12,7 @@ self.addEventListener("install", (e) => {
 			"/page/settings.htt",
 			"/page/page.htt",
 			"/page/select.htt",
+			"/page/stored.htt",
 			"/library.json",
 			"/img/icon.css",
 			"/img/icon.svg",
@@ -56,14 +57,14 @@ self.addEventListener("fetch", (e) => {
 self.addEventListener("message", (e) => {
 	console.log("[SW]: message", e.data);
 	if (!e.data.command) return;
-	if (e.data.command == "store") {
+	switch (e.data.command) {
+	case "store":
 		e.waitUntil(caches.open("library").then((cache) => {
 			console.log("[SW]: stored library");
 			return cache.add(e.data.path);
 		}));
-		return;
-	}
-	if (e.data.command == "update") {
+		break;
+	case "update":
 		console.log("[SW] update function is nearly untested!");
 		e.waitUntil(fetch("/library.json").then((response) => {
 			return response.json();
@@ -88,5 +89,46 @@ self.addEventListener("message", (e) => {
 				cache.add("/library.json");
 			});
 		}));
+		break;
+	case "requestStored":
+		// TODO
+		e.waitUntil(caches.match("/library.json").then((response) => {
+			return response.json();
+		}).then((lib) => {
+			var promises = [];
+			lib.list.forEach((el) => {
+				promises.push(caches.match(el.path));
+			});
+			return Promise.all(promises);
+		}).then((responses) => {
+			var reslist = [];
+			responses.forEach((el) => {
+				if (el == undefined)
+					return;
+				reslist.push(el.json());
+			});
+			return Promise.all(reslist);
+		}).then((list) => {
+			list.forEach((el) => {
+				caches.match("/library.json").then((response) => { // async TODO
+					return response.json();
+				}).then((lib) => {
+					lib.list.forEach((ob) => {
+						if (ob.short_name != el.short_name)
+							return;
+						el.path = ob.path;
+					});
+					return Promise.resolve(lib.list);
+				}).then((liblist) => {
+					self.clients.matchAll().then((clients) => {
+						clients.forEach((client) => {
+							client.postMessage({ command: "requestStored", data: list });
+						});
+					});
+				});
+			});
+		}));
+		break;
+	default:
 	}
 });

@@ -43,9 +43,28 @@ page.load = function(p) {
 		getId("chapter").style.display = "none";
 		getId("select_list").style.display = "none";
 		break;
+	case "stored":
+		if (!navigator.serviceWorker.controller)
+			break;
+		navigator.serviceWorker.controller.postMessage({ command: "requestStored" });
+		break;
 	default:
 	}
 };
+
+navigator.serviceWorker.addEventListener("message", (e) => {
+	switch (e.data.command) {
+	case "requestStored":
+		getId("stored_list").innerHTML = "";
+		e.data.data.forEach((el) => {
+			getId("stored_list").innerHTML +=
+				"<li><a href=\"#\" onclick=\"openBook('"+el.short_name+"', '"+el.path+"')\">"+el.name+"</a> in "+el.languages+"</li>";
+		});
+		console.log("Loaded stored books");
+		break;
+	default:
+	}
+});
 
 if ('serviceWorker' in navigator) {
 	navigator.serviceWorker.register("./worker.js").then((reg) => { console.log("register success", reg); }).catch((err) => { console.warn("no register success", err); });
@@ -183,4 +202,10 @@ function build_part_str(item, index, mod) {
 	} else {
 		strbuf += "<span class=\"t"+(index%mod)+"\">"+item+"</span>";
 	}
+}
+
+function update_stored() {
+	if (!navigator.serviceWorker.controller)
+		return;
+	navigator.serviceWorker.controller.postMessage({ command: "update" });
 }
