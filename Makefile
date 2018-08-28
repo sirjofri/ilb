@@ -1,5 +1,9 @@
 all: img/icon.svg img/icon.css favicons
 
+libgen:
+	find library -name "*.json" | ./tools/libgen.pl > library.json.gen
+	@echo -e "\nGenerated output is in library.json.gen. Please review, adjust it and copy it over to library.json.\n"
+
 img/icon.svg: img/icon.mp
 	cd img && \
 	mpost icon.mp

@@ -2,7 +2,11 @@ InterLinear Bible
 =================
 
 This progressive web app is a bible reader application for interlinear text.
-There is a perl converter for `.csv` data.
+There is a perl converter for `.csv` data (`tools/ilb-convert`).
+
+The tool `tools/libgen.pl` can automatically create a proper `library.json`.
+For more information read the POD there (TL;DR: `find library -name "*.json" |
+./tools/libgen.pl > output.json`).
 
 **All JSON files can change their format at any time!** This is all work in
 progress.

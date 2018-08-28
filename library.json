@@ -1,31 +1,31 @@
 {
-	"library": "official",
-	"path": "/library.json",
-	"version": "0.1",
-	"list": [
-		{
-			"short_name": "genesis",
-			"name": "genesis first book of moses",
-			"select": "genesis/1",
-			"path": "/library/genesis.json",
-			"version": "0.2",
-			"languages": [
-				"onelang",
-				"twolang",
-				"threelang"
-			]
-		},
-		{
-			"short_name": "exodus",
-			"name": "exodus second book of moses",
-			"select": "exodus/1",
-			"path": "/library/exodus.json",
-			"version": "0.1",
-			"languages": [
-				"onelang",
-				"twolang",
-				"threelang"
-			]
-		}
-	]
+   "path" : "/library.json",
+   "version" : "0.1",
+   "library" : "official",
+   "list" : [
+      {
+         "languages" : [
+            "onelang",
+            "twolang",
+            "threelang"
+         ],
+         "select" : "genesis/1",
+         "short_name" : "genesis",
+         "path" : "/library/genesis.json",
+         "version" : "0.2",
+         "name" : "genesis first book of moses"
+      },
+      {
+         "short_name" : "exodus",
+         "path" : "/library/exodus.json",
+         "version" : "0.1",
+         "select" : "exodus/1",
+         "languages" : [
+            "onelang",
+            "twolang",
+            "threelang"
+         ],
+         "name" : "exodus second book of moses"
+      }
+   ]
 }
