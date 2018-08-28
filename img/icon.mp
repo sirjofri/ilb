@@ -35,7 +35,6 @@ beginfig(1)
 %icon:select:
 	o := (1*width, 0);
 	begingroup
-		%draw o--o+(width,0)--o+(width,height)--o+(0,height)--cycle;
 		start := xpart o + 10;
 		ystart := 25;
 		yoffset := 7;
@@ -52,10 +51,53 @@ beginfig(1)
 		endfor;
 	endgroup;
 
+%icon:offline:
 	o := (2*width, 0);
-	pickup pencircle scaled 0pt;
-	draw (0,0)--o+(width,height);
+	begingroup
+		dist := 3;
+		plugheight := 10;
+		len := 10;
+		draw  o+(width/2-5, height)
+			--o+(width/2-5, height/2+plugheight){(-1,0)}
+			..{(0,-1)}o+(width/2-10, height/2)
+			--o+(width/2+10, height/2){(0,1)}
+			..{(-1,0)}o+(width/2+5, height/2+plugheight)
+			--o+(width/2+5, height);
+		draw  o+(width/2, height/2)
+			--o+(width/2, height/2-len);
+		draw  o+(width/2-1*dist, height/2)
+			--o+(width/2-1*dist, height/2-len);
+		draw  o+(width/2-2*dist, height/2)
+			--o+(width/2-2*dist, height/2-len);
+		draw  o+(width/2+1*dist, height/2)
+			--o+(width/2+1*dist, height/2-len);
+		draw  o+(width/2+2*dist, height/2)
+			--o+(width/2+2*dist, height/2-len);
+	endgroup;
 
+%icon:online:
+	o := (3*width, 0);
+	begingroup
+		plugheight := 10;
+		draw  o+(width/2-5, height)
+			--o+(width/2-5, height/2+plugheight){(-1,0)}
+			..{(0,-1)}o+(width/2-10, height/2)
+			--o+(width/2+10, height/2){(0,1)}
+			..{(-1,0)}o+(width/2+5, height/2+plugheight)
+			--o+(width/2+5, height);
+		draw  o+(width/2-7, 0)
+			--o+(width/2-7, height/2-plugheight){(-1,0)}
+			..{(0,1)}o+(width/2-10, height/2);
+		draw  o+(width/2+7, 0)
+			--o+(width/2+7, height/2-plugheight){(1,0)}
+			..{(0,1)}o+(width/2+10, height/2);
+	endgroup;
+
+	o := (4*width, 0);
+	pickup pencircle scaled 0pt;
+	draw (0,0)--o+(0,height); % image size
+
+	% debug lines
 	begingroup
 		pickup pencircle scaled 0.1pt;
 		for i=0 upto (xpart o)/width:

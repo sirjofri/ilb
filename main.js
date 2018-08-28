@@ -52,11 +52,13 @@ if ('serviceWorker' in navigator) {
 }
 
 function offline(e) {
-	getId("online").innerHTML = "offline";
+	getId("online").classList.add("icon-offline");
+	getId("online").classList.remove("icon-online");
 }
 
 function online(e) {
-	getId("online").innerHTML = "online";
+	getId("online").classList.add("icon-online");
+	getId("online").classList.remove("icon-offline");
 }
 
 window.addEventListener("online", online, false);
@@ -109,13 +111,11 @@ function select_open() {
 	}
 
 	var selectstring = selected.book+"/"+selected.chapter;
-	console.log("selectstring", selectstring);
 	xhr("./library.json", (r) => {
 		var obj = JSON.parse(r);
 		getId("select_list").innerHTML = "";
 		console.log("selectstring", selectstring);
 		obj.list.forEach((el) => {
-			console.log("select:", el);
 			if (el.select != selectstring)
 				return;
 

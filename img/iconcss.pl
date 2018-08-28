@@ -11,6 +11,10 @@ this file by hand! Use the tool instead. */
 	background-repeat: no-repeat;
 }
 
+.icon-readonly {
+	background-color: #aaa;
+}
+
 );
 
 sub css {

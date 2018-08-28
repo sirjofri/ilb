@@ -6,11 +6,23 @@ this file by hand! Use the tool instead. */
 	background-repeat: no-repeat;
 }
 
+.icon-readonly {
+	background-color: #aaa;
+}
+
 .icon-home {
 	background-position: 0px 0px;
 }
 
 .icon-select {
 	background-position: -64px 0px;
+}
+
+.icon-offline {
+	background-position: -128px 0px;
+}
+
+.icon-online {
+	background-position: -192px 0px;
 }
 
