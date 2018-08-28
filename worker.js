@@ -14,7 +14,12 @@ self.addEventListener("install", (e) => {
 			"/page/select.htt",
 			"/library.json",
 			"/img/icon.css",
-			"/img/icon.svg"
+			"/img/icon.svg",
+			"/img/favicon.svg",
+			"/img/favicon-32.png",
+			"/img/favicon-96.png",
+			"/apple-touch-icon.png",
+			"/favicon.ico"
 		]);
 	}).then(() => { return self.skipWaiting(); }));
 });

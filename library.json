@@ -26,6 +26,17 @@
 				"twolang",
 				"threelang"
 			]
+		},
+		{
+			"short_name": "Ioan 1",
+			"name": "First chapter of ioan",
+			"select": "john/1",
+			"path": "/library/john/1/ioan.json",
+			"version": "0.1",
+			"languages": [
+				"greek",
+				"romanian"
+			]
 		}
 	]
 }
