@@ -40,6 +40,7 @@ page.load = function(p) {
 	switch (p) {
 	case "select":
 		getId("book").style.display = "block";
+		select_getBooklist();
 		getId("chapter").style.display = "none";
 		getId("select_list").style.display = "none";
 		break;
@@ -73,11 +74,15 @@ if ('serviceWorker' in navigator) {
 function offline(e) {
 	getId("online").classList.add("icon-offline");
 	getId("online").classList.remove("icon-online");
+	getId("updatediv").classList.add("icon-readonly");
+	getId("updatebutton").style.display = "none";
 }
 
 function online(e) {
 	getId("online").classList.add("icon-online");
 	getId("online").classList.remove("icon-offline");
+	getId("updatediv").classList.remove("icon-readonly");
+	getId("updatebutton").style.display = "block";
 }
 
 window.addEventListener("online", online, false);
@@ -108,8 +113,45 @@ function updatePage() {
 
 var selected = {};
 
+function select_getBooklist()
+{
+	xhr("/library.json", (r) => {
+		var list = [];
+		JSON.parse(r).list.forEach((el) => {
+			list.push(el.select);
+		});
+		
+		getId("book").innerHTML = "";
+		list.forEach((select) => {
+			var book = select.split("/")[0];
+			getId("book").innerHTML +=
+				"<a href=\"#\" onclick=\"select_book('"+book+"');\">"+book+"</a>";
+		});
+	});
+}
+
+function select_getChapterlist()
+{
+	xhr("/library.json", (r) => {
+		var list = [];
+		JSON.parse(r).list.forEach((el) => {
+			if (el.select.split("/")[0] == selected.book)
+				list.push(el.select);
+		});
+
+		getId("chapter").innerHTML = "";
+		list.forEach((select) => {
+			var chapter = select.split("/")[1];
+			console.log("chapter ", chapter);
+			getId("chapter").innerHTML +=
+				"<a href=\"#\" onclick=\"select_chapter('"+chapter+"');\">"+chapter+"</a>";
+		});
+	});
+}
+
 function select_book(book) {
 	selected.book = book;
+	select_getChapterlist();
 	getId("book").style.display = "none";
 	getId("chapter").style.display = "block";
 }

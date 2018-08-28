@@ -73,3 +73,18 @@ article {
 #page_container .col > span {
 	display: block;
 }
+
+#book,
+#chapter {
+	margin: 10px 0px;
+}
+
+#book a,
+#chapter a {
+	display: inline-block;
+	text-decoration: none;
+	padding: 5px;
+	margin: 5px;
+	background-color: #ccc;
+	box-shadow: 0px 0px 3px black;
+}
