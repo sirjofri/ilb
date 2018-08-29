@@ -91,3 +91,17 @@ article {
 	background-color: #ccc;
 	box-shadow: 0px 0px 3px black;
 }
+
+ul,
+ul li {
+	list-style-type: none;
+	padding: 0px;
+}
+
+ul li a {
+	display: block;
+	padding: 5px;
+	background-color: #ccc;
+	box-shadow: 0px 0px 3px black;
+	margin: 7px 3px;
+}

@@ -59,7 +59,7 @@ navigator.serviceWorker.addEventListener("message", (e) => {
 		getId("stored_list").innerHTML = "";
 		e.data.data.forEach((el) => {
 			getId("stored_list").innerHTML +=
-				"<li><a href=\"#\" onclick=\"openBook('"+el.short_name+"', '"+el.path+"')\">"+el.name+"</a> in "+el.languages+"</li>";
+				"<li><a href=\"#\" onclick=\"openBook('"+el.short_name+"', '"+el.path+"')\">"+el.name+" in "+el.languages+"</a></li>";
 		});
 		console.log("Loaded stored books");
 		break;
@@ -185,7 +185,7 @@ function select_open() {
 			var lang = el.languages;
 
 			getId("select_list").innerHTML +=
-				"<li><a href=\"#\" onclick=\"openBook('"+book+"', '"+path+"');\">"+book+"</a> in "+el.languages+"</li>";
+				"<li><a href=\"#\" onclick=\"openBook('"+book+"', '"+path+"');\">"+book+" in "+el.languages+"</a></li>";
 		});
 	});
 }
@@ -206,7 +206,7 @@ function select_search_button() {
 
 			if (book.toLowerCase().match(searchstr) || name.toLowerCase().match(searchstr))
 				getId("select_list").innerHTML +=
-					"<li><a href=\"#\" onclick=\"openBook('"+book+"','"+path+"');\">"+book+"</a> in "+el.languages+"</li>";
+					"<li><a href=\"#\" onclick=\"openBook('"+book+"','"+path+"');\">"+book+" in "+el.languages+"</a></li>";
 		});
 	});
 }
