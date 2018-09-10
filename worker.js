@@ -1,4 +1,4 @@
-var version = "0.1";
+var version = "0.2";
 
 self.addEventListener("install", (e) => {
 	e.waitUntil(caches.open(version).then((cache) => {
