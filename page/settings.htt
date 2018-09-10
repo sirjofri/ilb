@@ -1,6 +1,32 @@
 <article>
 <header>
-<h2>Settings</h2>
+<h2>@settings-header@</h2>
 </header>
+
+<div>
+<h3>@settings-general@</h3>
+<ul>
+	<li>
+		<label for="language">@settings-language@</label>
+		<input type="text" id="language">
+		<input type="button" value="@settings-save@" onclick="saveLanguage();">
+	</li>
+	<li>
+		<label for="style">@settings-style@</label>
+		<input type="text" id="style">
+		<input type="button" value="@settings-save@" onclick="saveStyle();">
+	</li>
+</ul>
+</div>
+
+<div>
+<h3>@settings-library@</h3>
+<ul>
+	<li>
+		<label for="library">@settings-library-url@</label>
+		<input type="text" id="library">
+		<input type="button" value="@settings-save@" onclick="saveLibrary();">
+	</li>
+</div>
 
 </article>

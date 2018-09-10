@@ -1,11 +1,11 @@
 <article>
 <header>
-<h2>Book Select</h2>
+<h2>@select-header@</h2>
 </header>
 
 <div>
 <input type="text" id="select_search">
-<input type="button" value="Search" onclick="select_search_button();">
+<input type="button" value="@select-search@" onclick="select_search_button();">
 </div>
 
 <div id="book">

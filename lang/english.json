@@ -1,0 +1,14 @@
+{
+	"start-header": "Start",
+	"select-header": "Select Book",
+	"select-search": "Search",
+	"settings-header": "Settings",
+	"settings-save": "Save",
+	"settings-general": "General Settings",
+	"settings-language": "Language",
+	"settings-style": "Style",
+	"settings-library": "Library",
+	"settings-library-url": "Library URL",
+	"info-header": "Information",
+	"stored-header": "Offline Library"
+}

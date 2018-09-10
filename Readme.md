@@ -16,6 +16,9 @@ library.json
 
 This file is the database library. At the moment please look into it directly.
 
+It must be located under `path-to-library/library.json`. It should be possible
+to use other libraries as well (with CORS, see the Settings page).
+
 book.json
 =========
 

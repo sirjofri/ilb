@@ -1,6 +1,6 @@
 <article>
 <header>
-<h2>Offline Library</h2>
+<h2>@stored-header@</h2>
 </header>
 
 <ul id="stored_list">

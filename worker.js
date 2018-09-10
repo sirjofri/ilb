@@ -13,14 +13,16 @@ self.addEventListener("install", (e) => {
 			"/page/page.htt",
 			"/page/select.htt",
 			"/page/stored.htt",
-			"/library.json",
+			"/library/library.json",
 			"/img/icon.css",
 			"/img/icon.svg",
 			"/img/favicon.svg",
 			"/img/favicon-32.png",
 			"/img/favicon-96.png",
 			"/apple-touch-icon.png",
-			"/favicon.ico"
+			"/favicon.ico",
+			"/x/localforage.min.js",
+			"/lang/english.json"
 		]);
 	}).then(() => { return self.skipWaiting(); }));
 });
@@ -60,17 +62,17 @@ self.addEventListener("message", (e) => {
 	switch (e.data.command) {
 	case "store":
 		e.waitUntil(caches.open("library").then((cache) => {
-			console.log("[SW]: stored library");
+			console.log("[SW]: stored library", e.data.library);
 			return cache.add(e.data.path);
 		}));
 		break;
 	case "update":
 		console.log("[SW] update function is nearly untested!");
-		e.waitUntil(fetch("/library.json").then((response) => {
+		e.waitUntil(fetch(e.data.library+"/library.json").then((response) => {
 			return response.json();
 		}).then((data) => {
 			data.list.forEach((el) => {
-				caches.match("/library.json").then((response) => {
+				caches.match(e.data.library+"/library.json").then((response) => {
 					return response.json();
 				}).then((cached) => {
 					cached.list.forEach((cel) => {
@@ -85,14 +87,14 @@ self.addEventListener("message", (e) => {
 					});
 				});
 			});
-			caches.open(version).then((cache) => {
-				cache.add("/library.json");
+			caches.open("library").then((cache) => {
+				cache.add(e.data.library+"/library.json");
 			});
 		}));
 		break;
 	case "requestStored":
 		// TODO
-		e.waitUntil(caches.match("/library.json").then((response) => {
+		e.waitUntil(caches.match(e.data.library+"/library.json").then((response) => {
 			return response.json();
 		}).then((lib) => {
 			var promises = [];
@@ -110,7 +112,7 @@ self.addEventListener("message", (e) => {
 			return Promise.all(reslist);
 		}).then((list) => {
 			list.forEach((el) => {
-				caches.match("/library.json").then((response) => { // async TODO
+				caches.match(e.data.library+"/library.json").then((response) => { // async TODO
 					return response.json();
 				}).then((lib) => {
 					lib.list.forEach((ob) => {
@@ -127,6 +129,33 @@ self.addEventListener("message", (e) => {
 					});
 				});
 			});
+		}));
+		break;
+	case "updateLibrary":
+		e.waitUntil(caches.delete("library").then(() => { return self.skipWaiting(); }));
+		break;
+	case "updateLanguage":
+		e.waitUntil(caches.open(version).then((cache) => {
+			return cache.add("/lang/" + e.data.language + ".json");
+		}).then(() => {
+			self.clients.matchAll().then((clients) => {
+				clients.forEach((client) => {
+					client.postMessage(e.data);
+				});
+			});
+			return self.skipWaiting();
+		}));
+		break;
+	case "updateStyle":
+		e.waitUntil(caches.open(version).then((cache) => {
+			return cache.add("/style/" + e.data.style + ".css");
+		}).then(() => {
+			self.clients.matchAll().then((clients) => {
+				clients.forEach((client) => {
+					client.postMessage(e.data);
+				});
+			});
+			return self.skipWaiting();
 		}));
 		break;
 	default:

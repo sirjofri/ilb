@@ -1,14 +1,14 @@
 <article>
 <header>
-<h2>Start</h2>
+<h2>@start-header@</h2>
 </header>
 
 <ul>
-<li><a href="#" onclick="page.setPage('select');">Select Book</a></li>
-<li><a href="#" onclick="page.setPage('settings');">Settings</a></li>
-<li><a href="#" onclick="page.setPage('info');">Info</a></li>
+<li><a href="#" onclick="page.setPage('select');">@select-header@</a></li>
+<li><a href="#" onclick="page.setPage('settings');">@settings-header@</a></li>
+<li><a href="#" onclick="page.setPage('info');">@info-header@</a></li>
 <li><a href="#" onclick="page.setPage('page');">Page</a></li>
-<li><a href="#" onclick="page.setPage('stored');">Offline Library</a></li>
+<li><a href="#" onclick="page.setPage('stored');">@stored-header@</a></li>
 </ul>
 
 </article>

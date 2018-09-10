@@ -23,11 +23,12 @@ function getClass(cls) {
 }
 
 page = {};
+gllanguage = {};
 
 page.setPage = function(p, handler) {
 	xhr("./page/"+p+".htt", (r) => {
 		page.currentPage = p;
-		getTag("main")[0].innerHTML = r;
+		getTag("main")[0].innerHTML = r.replace(/@.+@/g, langreplace);
 		window.history.pushState({ noBackExitsApp: true, page: p }, '');
 		page.load(p);
 		if (handler)
@@ -36,9 +37,21 @@ page.setPage = function(p, handler) {
 	});
 };
 
+function langreplace(match) {
+	var pattern = match.substring(1, match.length-1);
+	return gllanguage[pattern];
+}
+
+gllibrary = {};
+
 page.load = function(p) {
 	switch (p) {
 	case "select":
+		localforage.getItem("settings-library").then((value) => {
+			xhr(value+"/library.json", (r) => {
+				gllibrary = JSON.parse(r);
+			});
+		});
 		getId("book").style.display = "block";
 		select_getBooklist();
 		getId("chapter").style.display = "none";
@@ -47,7 +60,35 @@ page.load = function(p) {
 	case "stored":
 		if (!navigator.serviceWorker.controller)
 			break;
-		navigator.serviceWorker.controller.postMessage({ command: "requestStored" });
+		localforage.getItem("settings-library").then((value) => {
+			navigator.serviceWorker.controller.postMessage({ command: "requestStored", library: value });
+		});
+		break;
+	case "settings":
+		localforage.getItem('settings-style').then((value) => {
+			if (value == null) {
+				getId("style").value = "default";
+				localforage.setItem('settigs-style', "default");
+				return;
+			}
+			getId("style").value = value;
+		});
+		localforage.getItem('settings-language').then((value) => {
+			if (value == null) {
+				getId("language").value = "english";
+				localforage.setItem('settings-language', "english");
+				return;
+			}
+			getId("language").value = value;
+		});
+		localforage.getItem('settings-library').then((value) => {
+			if (value == null) {
+				getId("library").value = "default path";
+				localforage.setItem('settings-library', "default path");
+				return;
+			}
+			getId("library").value = value;
+		});
 		break;
 	default:
 	}
@@ -63,6 +104,18 @@ navigator.serviceWorker.addEventListener("message", (e) => {
 		});
 		console.log("Loaded stored books");
 		break;
+	case "updateStyle":
+		getId("styleset").setAttribute("href", "/style/"+e.data.style+".css");
+		break;
+	case "updateLanguage":
+		xhr("/lang/"+e.data.language+".json", (r) => {
+			gllanguage = JSON.parse(r);
+		});
+		break;
+	case "updateLibrary":
+		xhr(e.data.library+"/library.json", (r) => {
+			gllibrary = JSON.parse(r);
+		});
 	default:
 	}
 });
@@ -86,7 +139,6 @@ function online(e) {
 }
 
 window.addEventListener("online", online, false);
-
 window.addEventListener("offline", offline, false);
 
 window.addEventListener("load", () => {
@@ -99,6 +151,40 @@ window.addEventListener("popstate", (ev) => {
 });
 
 window.onload = function() {
+	localforage.getItem('settings-language').then((value) => {
+		if (value == null) {
+			localforage.setItem('settings-language', 'english');
+			xhr("/lang/english.json", (r) => {
+				gllanguage = JSON.parse(r);
+				page.setPage("start");
+			});
+			return;
+		}
+		xhr("/lang/"+value+".json", (r) => {
+			gllanguage = JSON.parse(r);
+			page.setPage("start");
+		});
+	});
+	localforage.getItem('settings-style').then((value) => {
+		if (value == null) {
+			localforage.setItem('settings-style', 'default');
+			getId("styleset").setAttribute("href", '/style/default.css');
+			return;
+		}
+		getId("styleset").setAttribute("href", "/style/"+value+".css");
+	});
+	localforage.getItem('settings-library').then((value) => {
+		if (value == null) {
+			localforage.setItem('settings-library', '/library');
+			xhr("/library/library.json", (r) => {
+				gllibrary = JSON.parse(r);
+			});
+			return;
+		}
+		xhr(value+"/library.json", (r) => {
+			gllibrary = JSON.parse(r);
+		});
+	});
 	page.setPage("start");
 	updatePage();
 };
@@ -115,37 +201,33 @@ var selected = {};
 
 function select_getBooklist()
 {
-	xhr("/library.json", (r) => {
-		var list = [];
-		JSON.parse(r).list.forEach((el) => {
-			list.push(el.select);
-		});
-		
-		getId("book").innerHTML = "";
-		list.forEach((select) => {
-			var book = select.split("/")[0];
-			getId("book").innerHTML +=
-				"<a href=\"#\" onclick=\"select_book('"+book+"');\">"+book+"</a>";
-		});
+	var list = [];
+	gllibrary.list.forEach((el) => {
+		list.push(el.select);
+	});
+	
+	getId("book").innerHTML = "";
+	list.forEach((select) => {
+		var book = select.split("/")[0];
+		getId("book").innerHTML +=
+			"<a href=\"#\" onclick=\"select_book('"+book+"');\">"+book+"</a>";
 	});
 }
 
 function select_getChapterlist()
 {
-	xhr("/library.json", (r) => {
-		var list = [];
-		JSON.parse(r).list.forEach((el) => {
-			if (el.select.split("/")[0] == selected.book)
-				list.push(el.select);
-		});
+	var list = [];
+	gllibrary.list.forEach((el) => {
+		if (el.select.split("/")[0] == selected.book)
+			list.push(el.select);
+	});
 
-		getId("chapter").innerHTML = "";
-		list.forEach((select) => {
-			var chapter = select.split("/")[1];
-			console.log("chapter ", chapter);
-			getId("chapter").innerHTML +=
-				"<a href=\"#\" onclick=\"select_chapter('"+chapter+"');\">"+chapter+"</a>";
-		});
+	getId("chapter").innerHTML = "";
+	list.forEach((select) => {
+		var chapter = select.split("/")[1];
+		console.log("chapter ", chapter);
+		getId("chapter").innerHTML +=
+			"<a href=\"#\" onclick=\"select_chapter('"+chapter+"');\">"+chapter+"</a>";
 	});
 }
 
@@ -172,42 +254,36 @@ function select_open() {
 	}
 
 	var selectstring = selected.book+"/"+selected.chapter;
-	xhr("./library.json", (r) => {
-		var obj = JSON.parse(r);
-		getId("select_list").innerHTML = "";
-		console.log("selectstring", selectstring);
-		obj.list.forEach((el) => {
-			if (el.select != selectstring)
-				return;
+	getId("select_list").innerHTML = "";
+	console.log("selectstring", selectstring);
+	gllibrary.list.forEach((el) => {
+		if (el.select != selectstring)
+			return;
 
-			var book = el.short_name;
-			var path = el.path;
-			var lang = el.languages;
+		var book = el.short_name;
+		var path = el.path;
+		var lang = el.languages;
 
-			getId("select_list").innerHTML +=
-				"<li><a href=\"#\" onclick=\"openBook('"+book+"', '"+path+"');\">"+book+" in "+el.languages+"</a></li>";
-		});
+		getId("select_list").innerHTML +=
+			"<li><a href=\"#\" onclick=\"openBook('"+book+"', '"+path+"');\">"+book+" in "+el.languages+"</a></li>";
 	});
 }
 
 function select_search_button() {
-	xhr("./library.json", (r) => {
-		var obj = JSON.parse(r);
-		var searchstr = getId("select_search").value.toLowerCase();
-		getId("select_list").innerHTML = "";
-		getId("select_list").style.display = "block";
-		getId("book").style.display = "none";
-		getId("chapter").style.display = "none";
-		obj.list.forEach((el) => {
-			var book = el.short_name;
-			var name = el.name;
-			var path = el.path;
-			var lang = el.languages;
+	var searchstr = getId("select_search").value.toLowerCase();
+	getId("select_list").innerHTML = "";
+	getId("select_list").style.display = "block";
+	getId("book").style.display = "none";
+	getId("chapter").style.display = "none";
+	gllibrary.list.forEach((el) => {
+		var book = el.short_name;
+		var name = el.name;
+		var path = el.path;
+		var lang = el.languages;
 
-			if (book.toLowerCase().match(searchstr) || name.toLowerCase().match(searchstr))
-				getId("select_list").innerHTML +=
-					"<li><a href=\"#\" onclick=\"openBook('"+book+"','"+path+"');\">"+book+" in "+el.languages+"</a></li>";
-		});
+		if (book.toLowerCase().match(searchstr) || name.toLowerCase().match(searchstr))
+			getId("select_list").innerHTML +=
+				"<li><a href=\"#\" onclick=\"openBook('"+book+"','"+path+"');\">"+book+" in "+el.languages+"</a></li>";
 	});
 }
 
@@ -219,9 +295,12 @@ function openBook(title, path) {
 			getId("page_storelink").addEventListener("click", () => {
 				if (!navigator.serviceWorker.controller)
 					return;
-				navigator.serviceWorker.controller.postMessage({
-					command: "store",
-					path: path
+				localforage.getItem("settings-library").then((value) => {
+					navigator.serviceWorker.controller.postMessage({
+						command: "store",
+						path: path,
+						library: value
+					});
 				});
 			});
 			var obj = JSON.parse(r);
@@ -249,5 +328,24 @@ function build_part_str(item, index, mod) {
 function update_stored() {
 	if (!navigator.serviceWorker.controller)
 		return;
-	navigator.serviceWorker.controller.postMessage({ command: "update" });
+	localforage.getItem("settings-library").then((value) => {
+		navigator.serviceWorker.controller.postMessage({ command: "update", library: value });
+	});
+}
+
+function saveLanguage() {
+	localforage.setItem('settings-language', getId('language').value);
+	navigator.serviceWorker.controller.postMessage({ command: "updateLanguage", language: getId('language').value });
+}
+
+function saveStyle() {
+	localforage.setItem('settings-style', getId('style').value);
+	navigator.serviceWorker.controller.postMessage({ command: "updateStyle", style: getId('style').value });
+}
+
+function saveLibrary() {
+	if (!navigator.serviceWorker.controller)
+		return;
+	localforage.setItem('settings-library', getId('library').value);
+	navigator.serviceWorker.controller.postMessage({ command: "updateLibrary", library: getId('library').value });
 }

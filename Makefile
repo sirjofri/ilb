@@ -1,5 +1,9 @@
 all: img/icon.svg img/icon.css favicons
 
+deploy: download
+
+download: x/localforage.min.js
+
 libgen:
 	find library -name "*.json" | ./tools/libgen.pl > library.json.gen
 	@echo -e "\nGenerated output is in library.json.gen. Please review, adjust it and copy it over to library.json.\n"
@@ -31,3 +35,7 @@ img/favicon-96.png: apple-touch-icon.png
 
 mstile-144x144.png: apple-touch-icon.png
 	convert $< -resize 144x144 $@
+
+x/localforage.min.js:
+	mkdir -p $(dir $@)
+	curl -L https://raw.githubusercontent.com/mozilla/localForage/master/dist/localforage.min.js > $@
