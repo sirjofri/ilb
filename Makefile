@@ -15,7 +15,7 @@ img/icon.svg: img/icon.mp
 img/icon.css: img/icon.mp
 	./img/iconcss.pl <$< > $@
 
-favicons: img/favicon.svg favicon.ico img/favicon-32.png img/favicon-96.png apple-touch-icon.png
+favicons: img/favicon.svg favicon.ico img/favicon-32.png img/favicon-96.png apple-touch-icon.png mstile-144x144.png
 
 img/favicon.svg: img/favicon.mp
 	cd img && \

@@ -2,6 +2,32 @@
 	"short_name": "ILB",
 	"name": "InterLinear Bible",
 	"description": "An Interlinear Bible App",
+	"icons": [
+		{
+			"src": "./img/favicon.svg",
+			"type": "image/svg+xml"
+		},
+		{
+			"src": "./apple-touch-icon.png",
+			"sizes": "180x180",
+			"type": "image/png"
+		},
+		{
+			"src": "./mstile-144x144.png",
+			"sizes": "144x144",
+			"type": "image/png"
+		},
+		{
+			"src": "./img/favicon-96.png",
+			"sizes": "96x96",
+			"type": "image/png"
+		},
+		{
+			"src": "./img/favicon-32.png",
+			"sizes": "32x32",
+			"type": "image/png"
+		},
+	],
 	"start_url": "./index.html",
 	"display": "standalone",
 	"orientation": "portrait",

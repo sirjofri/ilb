@@ -20,6 +20,7 @@ self.addEventListener("install", (e) => {
 			"/img/favicon-32.png",
 			"/img/favicon-96.png",
 			"/apple-touch-icon.png",
+			"/mstile-144x144.png",
 			"/favicon.ico",
 			"/x/localforage.min.js",
 			"/lang/english.json"
