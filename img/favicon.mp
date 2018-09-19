@@ -19,10 +19,10 @@ beginfig(1)
 		z31 = (x30, y30+paperheight);
 		z41 = (x40, y40+paperheight);
 
-		draw z10..z20..z30..z40;
-		draw z11..z21..z31..z41;
-		draw z10--z11;
-		draw z40--z41;
+		path p;
+		p = z10..z20..z30..z40--z41..z31..z21..z11--cycle;
+		draw p;
+		fill p withcolor white;
 	endgroup;
 
 	pickup pencircle scaled 4pt;

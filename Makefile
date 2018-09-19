@@ -15,6 +15,8 @@ img/icon.svg: img/icon.mp
 img/icon.css: img/icon.mp
 	./img/iconcss.pl <$< > $@
 
+conv = convert -background none -resize 
+
 favicons: img/favicon.svg favicon.ico img/favicon-32.png img/favicon-96.png apple-touch-icon.png mstile-144x144.png
 
 img/favicon.svg: img/favicon.mp
@@ -22,7 +24,7 @@ img/favicon.svg: img/favicon.mp
 	mpost favicon.mp
 
 apple-touch-icon.png: img/favicon.svg
-	convert -density 1200 $< -resize 180x180 $@
+	$(conv) 180x180 $< $@
 
 favicon.ico: apple-touch-icon.png
 	convert $< -resize 96x96 -colors 256 $@
