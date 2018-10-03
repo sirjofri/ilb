@@ -49,7 +49,7 @@ while($filename = <>) {
 
 my %library = (
 	'library' => 'official',
-	'path'    => '/library.json',
+	'path'    => '/',
 	'version' => '0.1',
 	'list'    => \@records,
 );

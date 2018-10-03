@@ -50,12 +50,12 @@ page.load = function(p) {
 		localforage.getItem("settings-library").then((value) => {
 			xhr(value+"/library.json", (r) => {
 				gllibrary = JSON.parse(r);
+				getId("book").style.display = "block";
+				select_getBooklist();
+				getId("chapter").style.display = "none";
+				getId("select_list").style.display = "none";
 			});
 		});
-		getId("book").style.display = "block";
-		select_getBooklist();
-		getId("chapter").style.display = "none";
-		getId("select_list").style.display = "none";
 		break;
 	case "stored":
 		if (!navigator.serviceWorker.controller)
@@ -265,7 +265,7 @@ function select_open() {
 		var lang = el.languages;
 
 		getId("select_list").innerHTML +=
-			"<li><a href=\"#\" onclick=\"openBook('"+book+"', '"+path+"');\">"+book+" in "+el.languages+"</a></li>";
+			"<li><a href=\"#\" onclick=\"openBook('"+book+"', '"+gllibrary.path+"/"+path+"');\">"+book+" in "+el.languages+"</a></li>";
 	});
 }
 
