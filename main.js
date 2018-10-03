@@ -283,7 +283,7 @@ function select_search_button() {
 
 		if (book.toLowerCase().match(searchstr) || name.toLowerCase().match(searchstr))
 			getId("select_list").innerHTML +=
-				"<li><a href=\"#\" onclick=\"openBook('"+book+"','"+path+"');\">"+book+" in "+el.languages+"</a></li>";
+				"<li><a href=\"#\" onclick=\"openBook('"+book+"','"+gllibrary.path+"/"+path+"');\">"+book+" in "+el.languages+"</a></li>";
 	});
 }
 
@@ -316,6 +316,7 @@ function openBook(title, path) {
 var strbuf = "";
 
 function build_part_str(item, index, mod) {
+	item = item != "" ? item : "&nbsp;";
 	if (index%mod == 0) {
 		strbuf += "<div class=\"col\"><span class=\"t"+(index%mod)+"\">"+item+"</span>";
 	} else if (index%mod == mod-1) {
