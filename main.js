@@ -175,8 +175,8 @@ window.onload = function() {
 	});
 	localforage.getItem('settings-library').then((value) => {
 		if (value == null) {
-			localforage.setItem('settings-library', '/library');
-			xhr("/library/library.json", (r) => {
+			localforage.setItem('settings-library', 'https://ilb.sirjofri.de/library');
+			xhr("https://ilb.sirjofri.de/library/library.json", (r) => {
 				gllibrary = JSON.parse(r);
 			});
 			return;
