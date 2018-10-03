@@ -11,13 +11,13 @@
          ],
          "select" : "genesis/1",
          "short_name" : "genesis",
-         "path" : "/library/genesis.json",
+         "path" : "/genesis.json",
          "version" : "0.2",
          "name" : "genesis first book of moses"
       },
       {
          "short_name" : "exodus",
-         "path" : "/library/exodus.json",
+         "path" : "/exodus.json",
          "version" : "0.1",
          "select" : "exodus/1",
          "languages" : [

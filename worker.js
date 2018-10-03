@@ -13,7 +13,6 @@ self.addEventListener("install", (e) => {
 			"/page/page.htt",
 			"/page/select.htt",
 			"/page/stored.htt",
-			"/library/library.json",
 			"/img/icon.css",
 			"/img/icon.svg",
 			"/img/favicon.svg",
@@ -64,7 +63,7 @@ self.addEventListener("message", (e) => {
 	case "store":
 		e.waitUntil(caches.open("library").then((cache) => {
 			console.log("[SW]: stored library", e.data.library);
-			return cache.add(e.data.path);
+			return cache.addAll([e.data.path, e.data.library+"/library.json"]);
 		}));
 		break;
 	case "update":
@@ -100,7 +99,7 @@ self.addEventListener("message", (e) => {
 		}).then((lib) => {
 			var promises = [];
 			lib.list.forEach((el) => {
-				promises.push(caches.match(el.path));
+				promises.push(caches.match(lib.path+"/"+el.path));
 			});
 			return Promise.all(promises);
 		}).then((responses) => {
@@ -119,7 +118,7 @@ self.addEventListener("message", (e) => {
 					lib.list.forEach((ob) => {
 						if (ob.short_name != el.short_name)
 							return;
-						el.path = ob.path;
+						el.path = lib.path + "/" + ob.path;
 					});
 					return Promise.resolve(lib.list);
 				}).then((liblist) => {
